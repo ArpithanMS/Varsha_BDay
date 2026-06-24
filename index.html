@@ -450,6 +450,29 @@ a { color: inherit; text-decoration: none; }
   100% { opacity: 0; transform: translateY(-20vh) scale(1); }
 }
 
+/* US IN NUMBERS */
+#stats { background: linear-gradient(180deg, var(--burgundy-darker) 0%, var(--burgundy-dark) 100%); }
+.stats-grid {
+  max-width: 700px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0;
+}
+.stat-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 22px 0; border-bottom: 1px solid rgba(183, 110, 121, 0.12);
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-label {
+  font-family: var(--font-body); font-size: 0.9rem;
+  color: var(--cream-muted); letter-spacing: 0.5px;
+}
+.stat-value {
+  font-family: var(--font-display); font-size: 1.05rem;
+  color: var(--cream); font-weight: 600; text-align: right;
+}
+.stat-value .live-counter {
+  font-family: var(--font-display); color: var(--rose-gold-light);
+}
+
 /* REELS & MEMES SECTION */
 #reels-memes { background: radial-gradient(ellipse at 50% 50%, var(--burgundy-deep) 0%, var(--burgundy-darker) 70%); }
 .memes-grid {
@@ -1111,6 +1134,43 @@ a { color: inherit; text-decoration: none; }
 </section>
 
 
+<!-- ===================== US IN NUMBERS ===================== -->
+<section id="stats" class="section" data-section="11">
+  <h2 class="section-title reveal">Us In Numbers</h2>
+  <p class="section-subtitle reveal">Some things are easier to count than explain</p>
+  <div class="section-divider reveal"></div>
+
+  <div class="stats-grid reveal">
+    <div>
+      <div class="stat-row">
+        <span class="stat-label">Together since</span>
+        <span class="stat-value"><span class="live-counter" id="together-counter"></span></span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Calls survived</span>
+        <span class="stat-value">Countless</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Distance survived</span>
+        <span class="stat-value">374 km</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Hospital rants listened to</span>
+        <span class="stat-value">Infinite</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Times I missed you</span>
+        <span class="stat-value">Every day</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Times you made me smile</span>
+        <span class="stat-value">Also every day</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ===================== SECTION 9: FINALE ===================== -->
 <section id="finale" class="section" data-section="8">
   <div class="particles-container" id="particles"></div>
@@ -1125,16 +1185,16 @@ Countless memories.
 
 But if I had to reduce everything to one sentence...
 
-I'm really glad it was you.
+I'm really glad it was you...
 
-Happy Birthday, Chakkare No matter where life takes us,<br>you'll always have a special place<br>in my heart.
+No matter where life takes us,<br>you'll always have a special place<br>in my heart.
 </p>
   </div>
   <div class="reveal" style="transition-delay: 0.3s;">
     <p class="finale-birthday">Happy Birthday, Vaaave &#10084;&#65039;</p>
   </div>
   <div class="reveal" style="transition-delay: 0.6s;">
-    <p class="finale-signature">&mdash; Yours Truly, Arpithan Manju Subrahmanian, h/o you..</p>
+    <p class="finale-signature">&mdash; Yours Truly, Arpithan, h/o Varsha</p>
   </div>
 </section>
 
@@ -1412,6 +1472,22 @@ Happy Birthday, Chakkare No matter where life takes us,<br>you'll always have a 
     p.style.opacity = 0;
     pc.appendChild(p);
   }
+
+  // LIVE TOGETHER COUNTER (since 22 Dec 2019)
+  var startDate = new Date(2019, 11, 22);
+  var counterEl = document.getElementById('together-counter');
+  function updateCounter() {
+    var now = new Date();
+    var years = now.getFullYear() - startDate.getFullYear();
+    var months = now.getMonth() - startDate.getMonth();
+    var days = now.getDate() - startDate.getDate();
+    if (days < 0) { months--; days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+    if (months < 0) { years--; months += 12; }
+    counterEl.textContent = years + ' years, ' + months + ' months, ' + days + ' days';
+  }
+  updateCounter();
+  setInterval(updateCounter, 60000);
+
 })();
 </script>
 

@@ -525,6 +525,7 @@ a { color: inherit; text-decoration: none; }
 <div class="video-modal" id="video-modal">
   <button class="video-modal-close" aria-label="Close">&times;</button>
   <video controls playsinline id="modal-video"><source src="" type="video/mp4"></video>
+  <iframe id="modal-iframe" allow="autoplay; encrypted-media" allowfullscreen style="display:none;width:90vw;height:80vh;max-width:900px;border:none;border-radius:8px;"></iframe>
 </div>
 
 
@@ -627,8 +628,8 @@ a { color: inherit; text-decoration: none; }
   <div class="section-divider reveal"></div>
 
   <div class="gallery-grid">
-    <div class="gallery-item reveal-scale"><img src="Photos-3-001/IMG-20230818-WA0012.jpg" alt=""><p class="gallery-caption">Photo 1</p></div>
-    <div class="gallery-item reveal-scale"><img src="Photos-3-001/20230218_143412.jpg" alt=""><p class="gallery-caption">Photo 2</p></div>
+    <div class="gallery-item reveal-scale"><img src="Photos-3-001/IMG-20230818-WA0012.jpg" alt=""><p class="gallery-caption">My fav smile that makes my world soo much bright.</p></div>
+    <div class="gallery-item reveal-scale"><img src="Photos-3-001/20230218_143412.jpg" alt=""><p class="gallery-caption">Our first Date </p></div>
     <div class="gallery-item reveal-scale"><img src="Photos-3-001/IMG-20260122-WA0064.jpg" alt=""><p class="gallery-caption">Photo 3</p></div>
     <div class="gallery-item reveal-scale"><img src="Photos-3-001/IMG-20260131-WA0015.jpg" alt=""><p class="gallery-caption">Photo 4</p></div>
     <div class="gallery-item reveal-scale"><img src="Photos-3-001/20230218_150335.jpg" alt=""><p class="gallery-caption">Photo 5</p></div>
@@ -712,9 +713,9 @@ a { color: inherit; text-decoration: none; }
       <div class="video-card-body"><h3 class="video-card-title">Drunk Varsha is sooo fucking cute</h3></div>
     </div>
 
-    <div class="video-card reveal" data-video="Photos-3-001/Screen_Recording_20230528_231544_WhatsApp.mp4">
+    <div class="video-card reveal" data-drive="16mXIlq55d6zllDxISnx64mjbzNlTYvcI">
       <div class="video-thumb">
-        <video preload="metadata" muted playsinline><source src="Photos-3-001/Screen_Recording_20230528_231544_WhatsApp.mp4#t=0.5" type="video/mp4"></video>
+        <div style="width:100%;height:100%;background:var(--burgundy-deep);display:flex;align-items:center;justify-content:center;color:var(--cream-muted);font-size:0.75rem;letter-spacing:1px;">DRIVE VIDEO</div>
         <div class="play-btn"></div>
       </div>
       <div class="video-card-body"><h3 class="video-card-title">Drunk Varsha is sooo fucking cute Part 2</h3></div>
@@ -728,9 +729,9 @@ a { color: inherit; text-decoration: none; }
       <div class="video-card-body"><h3 class="video-card-title">The call where I found out my girlfriend is a genius</h3></div>
     </div>
 
-    <div class="video-card reveal" data-video="Photos-3-001/Screen_Recording_20241018_192329_WhatsApp.mp4">
+    <div class="video-card reveal" data-drive="1cnoHVI7CKMK818EyBYi49CAuYEBy_43D">
       <div class="video-thumb">
-        <video preload="metadata" muted playsinline><source src="Photos-3-001/Screen_Recording_20241018_192329_WhatsApp.mp4#t=0.5" type="video/mp4"></video>
+        <div style="width:100%;height:100%;background:var(--burgundy-deep);display:flex;align-items:center;justify-content:center;color:var(--cream-muted);font-size:0.75rem;letter-spacing:1px;">DRIVE VIDEO</div>
         <div class="play-btn"></div>
       </div>
       <div class="video-card-body"><h3 class="video-card-title">Ragebaiting is the best form of showing love LMFAOO</h3></div>
@@ -1324,12 +1325,22 @@ a { color: inherit; text-decoration: none; }
   // VIDEO MODAL
   var videoModal = document.getElementById('video-modal');
   var modalVideo = document.getElementById('modal-video');
+  var modalIframe = document.getElementById('modal-iframe');
 
   document.querySelectorAll('.video-card').forEach(function(card) {
     card.addEventListener('click', function() {
+      var driveId = card.getAttribute('data-drive');
       var src = card.getAttribute('data-video');
-      modalVideo.querySelector('source').src = src;
-      modalVideo.load();
+      if (driveId) {
+        modalVideo.style.display = 'none';
+        modalIframe.style.display = 'block';
+        modalIframe.src = 'https://drive.google.com/file/d/' + driveId + '/preview';
+      } else {
+        modalIframe.style.display = 'none';
+        modalVideo.style.display = 'block';
+        modalVideo.querySelector('source').src = src;
+        modalVideo.load();
+      }
       videoModal.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
@@ -1339,6 +1350,9 @@ a { color: inherit; text-decoration: none; }
     videoModal.classList.remove('active');
     modalVideo.pause();
     modalVideo.currentTime = 0;
+    modalIframe.src = '';
+    modalIframe.style.display = 'none';
+    modalVideo.style.display = 'block';
     document.body.style.overflow = '';
   }
 
